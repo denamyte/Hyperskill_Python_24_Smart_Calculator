@@ -65,5 +65,8 @@ files:
         CalcTest("calculator.calculator").run_tests()
   learner_created: false
 feedback_link: https://hyperskill.org/projects/74/stages/409/implement#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Mon, 06 Feb 2023 12:37:31 UTC"
 record: -1
