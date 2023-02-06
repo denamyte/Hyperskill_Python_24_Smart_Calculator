@@ -166,9 +166,12 @@ files:
     if __name__ == '__main__':
         CalcTest("calculator.calculator").run_tests()
   learner_created: false
+- name: calculator/exceptions.py
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/74/stages/412/implement#comment
 status: Solved
 feedback:
   message: Congratulations!
   time: "Mon, 06 Feb 2023 14:04:21 UTC"
-record: -1
+record: 4

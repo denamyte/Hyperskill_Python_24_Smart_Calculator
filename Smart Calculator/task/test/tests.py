@@ -6,125 +6,137 @@ class CalcTest(StageTest):
     on_exit = False
 
     def generate(self) -> List[TestCase]:
-        return [TestCase(stdin=['/help', self.test_1_1, self.test_1_2]),
-                TestCase(stdin=['7 + 1 + 4', self.test_2_1, self.test_2_2, self.test_2_3, self.test_2_4,
-                                self.test_2_5, self.test_2_6, self.test_2_7, self.test_2_8]),
-                TestCase(stdin=['8 --- 3', self.test_3_1, self.test_3_2, self.test_3_3, self.test_3_4]),
-                TestCase(stdin=['14       -   12', self.test_4_1, self.test_4_2])]
+        return [TestCase(stdin=['/help', self.test_1, self.test_2]),
+                TestCase(stdin=['7 + 1 + 4', self.test_3, self.test_4, self.test_5, self.test_6,
+                                self.test_7, self.test_8, self.test_9]),
+                TestCase(stdin=['123+', self.test_10, self.test_11, self.test_12,
+                                self.test_13, self.test_14, self.test_15]),
+                TestCase(stdin=['14       -   12', self.test_16, self.test_17])]
 
     # test of help command
-    def test_1_1(self, output):
+    def test_1(self, output):
         output = str(output).lower().strip()
-        if len(output.split(" ")) < 1:
+        if len(output.split(" ")) < 3:
             return CheckResult.wrong("It seems like there was no any \"help\" message.")
         return ""
 
     # test of an empty input
-    def test_1_2(self, output):
+    def test_2(self, output):
         output = str(output)
         if len(output) != 0:
             return CheckResult.wrong("Incorrect response to an empty string. "
                                      "The program should not print anything.")
         self.on_exit = True
-        return '/exit'
+        return "/exit"
 
-    # tests for this stage #####################################################
-    # sum of three positive
-    def test_2_1(self, output):
+    # the previous stage tests #################################################
+    # sum of positive
+    def test_3(self, output):
         output = str(output).lower().strip()
         if output != "12":
             return CheckResult.wrong("The program cannot sum more than two numbers.")
-        return "23 - 17 - 4"
-
-    # sum of positive and negative is positive
-    def test_2_2(self, output):
-        output = str(output).lower().strip()
-        if output != "2":
-            return CheckResult.wrong("Incorrect sum of positive and negative numbers.")
         return "23 - 17 - 13"
 
-    # sum of positive and negative is negative
-    def test_2_3(self, output):
+    # mixed operations
+    def test_4(self, output):
         output = str(output).lower().strip()
         if output != "-7":
             return CheckResult.wrong("Incorrect sum of positive and negative numbers.")
-        return "-9 - 4 - 21"
-
-    # sum of negative only
-    def test_2_4(self, output):
-        output = str(output).lower().strip()
-        if output != "-34":
-            return CheckResult.wrong("Incorrect sum of three negative numbers.")
         return "33 + 21 + 11 + 49 - 32 - 9 + 1 - 80 + 4"
 
-    # big amount of number
-    def test_2_5(self, output):
+    # mixed operations
+    def test_5(self, output):
         output = str(output).lower().strip()
         if output != "-2":
-            return CheckResult.wrong("The program cannot process a big amount of numbers.")
+            return CheckResult.wrong("Incorrect sum of positive and negative numbers.")
         return "101"
 
-    # one positive number
-    def test_2_6(self, output):
+    # one positive
+    def test_6(self, output):
         output = str(output).lower().strip()
         if output != "101":
-            return CheckResult.wrong("The program printed not the same number that was entered.")
+            return CheckResult.wrong("The program printed not the same number that was entered "
+                                     "(when one number is entered it is a valid expression).")
         return "-302"
 
-    # one negative number
-    def test_2_7(self, output):
+    # one negative
+    def test_7(self, output):
         output = str(output).lower().strip()
         if output != "-302":
             return CheckResult.wrong("The program printed not the same number that was entered.")
         return "10 - 7 - 3"
 
-    # the sum is zero
-    def test_2_8(self, output):
+    # sum is equal to zero
+    def test_8(self, output):
         output = str(output).lower().strip()
         if output != "0":
             return CheckResult.wrong("The problem when sum is equal to 0 has occurred.")
-        self.on_exit = True
-        return "/exit"
-
-    # usage of several operators ###############################################
-    # test of odd number of minus signs
-    def test_3_1(self, output):
-        output = str(output).lower().strip()
-        if output != "5":
-            return CheckResult.wrong("The program cannot process several minus signs.")
-        return "8 -- 3"
-
-    # test of even number of minus signs
-    def test_3_2(self, output):
-        output = str(output).lower().strip()
-        if output != "11":
-            return CheckResult.wrong("The program not correctly processes even number of minus signs.")
-        return "32 ++++++++++++++ 4"
-
-    # test of several plus signs
-    def test_3_3(self, output):
-        output = str(output).lower().strip()
-        if output != "36":
-            return CheckResult.wrong("The program cannot process several plus signs.")
         return "5 --- 2 ++++++ 4 -- 2 ---- 1"
 
-    # test of multiple operations
-    def test_3_4(self, output):
+    # multiple operators
+    def test_9(self, output):
         output = str(output).lower().strip()
         if output != "10":
             return CheckResult.wrong("The program cannot process multiple operations with several operators.")
         self.on_exit = True
         return "/exit"
 
+    # tests for this step ######################################################
+    # test of invalid expression
+    def test_10(self, output):
+        output = str(output).lower().strip()
+        if "invalid" not in output:
+            return CheckResult.wrong("The program cannot process an invalid expression.")
+        return "321-"
+
+    # test of invalid expression
+    def test_11(self, output):
+        output = str(output).lower().strip()
+        if "invalid" not in output:
+            return CheckResult.wrong("The program cannot process an invalid expression.")
+        return "+7"
+
+    # input one number with plus in front of it
+    def test_12(self, output):
+        output = str(output).lower().strip()
+        if output != "7":
+            return CheckResult.wrong("The program not correctly processes useless plus sign.")
+        return "abc"
+
+    # not numbers in input
+    def test_13(self, output):
+        output = str(output).lower().strip()
+        if "invalid" not in output:
+            return CheckResult.wrong("The program should print \"Invalid expression\" " +
+                                     "when not a numbers are entered")
+        return "one + two + three"
+
+    # not numbers in input
+    def test_14(self, output):
+        output = str(output).lower().strip()
+        if "invalid" not in output:
+            return CheckResult.wrong("The program should print \"Invalid expression\" " +
+                                     "when not a numbers are entered")
+        return "/go"
+
+    # test of nonexistent command
+    def test_15(self, output):
+        output = str(output).lower().strip()
+        if "unknown" not in output:
+            return CheckResult.wrong("The program should print \"Unknown command\" " +
+                                     "when a nonexistent command is entered.")
+        self.on_exit = True
+        return "/exit"
+
     # test input with lots of spaces
-    def test_4_1(self, output):
+    def test_16(self, output):
         output = str(output).lower().strip()
         if output != "2":
             return CheckResult.wrong("The program cannot process several spaces in the operation.")
         return "5  +  2"
 
     # test with additional spaces
-    def test_4_2(self, output):
+    def test_17(self, output):
         output = str(output).lower().strip()
         if output != "7":
             return CheckResult.wrong("The program cannot process several spaces in the operation.")

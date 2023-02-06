@@ -179,6 +179,24 @@ files:
     if __name__ == '__main__':
         CalcTest("calculator.calculator").run_tests()
   learner_created: false
+- name: calculator/exceptions.py
+  visible: true
+  text: |
+    class UnknownCmdError(BaseException):
+        def __str__(self):
+            return 'Unknown command'
+
+
+    class InvExprError(BaseException):
+        def __str__(self):
+            return 'Invalid expression'
+  learner_created: true
+- name: calculator/operands.py
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/74/stages/413/implement#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Mon, 06 Feb 2023 21:35:25 UTC"
 record: -1

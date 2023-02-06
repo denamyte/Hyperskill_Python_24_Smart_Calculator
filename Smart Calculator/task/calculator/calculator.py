@@ -1,44 +1,47 @@
-from typing import List
+import re
+import exceptions as ex
+import operands as op
 
+RE_PLUSES = re.compile(r'\++$')
+RE_MINUSES = re.compile('-+$')
 OPS = {'+': 1, '-': -1}
 
 
 def main():
     while True:
-        match split_and_process_signs(input()):
-            case ['/help']:
-                print('The program calculates the sum of numbers')
-            case ['/exit']:
-                print('Bye!')
-                break
-            case tokens if len(tokens):
-                res = 0
-                sign = 1
-                for token in tokens:
-                    if token in OPS:
-                        sign = OPS[token]
-                    else:
-                        res += sign * int(token)
-                print(res)
+        try:
+            match input():
+                case '':
+                    continue
+                case s if s.startswith('/'):
+                    match s:
+                        case '/help':
+                            print('The program calculates the sum of numbers')
+                        case '/exit':
+                            print('Bye!')
+                            break
+                        case _:
+                            raise ex.UnknownCmdError()
+                case s:
+                    expr = parse_expr(s)
+                    print(expr.get_result())
+        except BaseException as e:
+            print(e)
 
 
-def split_and_process_signs(raw: str) -> List[str]:
-    """
-    Convert '+++...' into a single '+'.
-
-    Convert '---...' into a '-' if raw length is odd, and into a '+', otherwise.
-    :param raw: input string
-    :return: a list of preprocessed tokens
-    """
+def parse_expr(raw: str) -> op.ExprNode:
     tokens = raw.split()
-    for i, token in enumerate(tokens):
+    expr = op.ExprNode('')
+    for token in tokens:
         match token:
-            case t if t.endswith('+'):
-                tokens[i] = '+'
-            case t if t.endswith('-'):
-                tokens[i] = '-' if len(t) % 2 else '+'
+            case t if RE_PLUSES.match(t):
+                expr = expr.add_node(op.Operator('+'))
+            case t if RE_MINUSES.match(t):
+                expr = expr.add_node(op.Operator('-' if len(t) % 2 else '+'))
+            case t:
+                expr = expr.add_node(op.Operand(t))
 
-    return tokens
+    return expr
 
 
 if __name__ == '__main__':
