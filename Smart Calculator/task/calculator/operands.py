@@ -1,5 +1,5 @@
 from operator import add, sub
-from abc import abstractmethod
+from abc import abstractmethod, ABC
 from dataclasses import dataclass
 from exceptions import InvExprError
 
@@ -8,12 +8,12 @@ OPERATORS = {'+': add,
 
 
 @dataclass
-class ExprNode:
-    value: str
+class ExprNode(ABC):
+    _value: str
 
     def add_node(self, other: 'ExprNode') -> 'ExprNode':
         match self, other:
-            case (ExprNode(value=''), that):  # start case
+            case (ExprNode(_value=''), that):  # start case
                 return that
             case (this, Operator() as that):
                 that.left = this
@@ -24,29 +24,28 @@ class ExprNode:
         raise InvExprError()
 
     @abstractmethod
-    def get_result(self) -> int:
+    def result(self) -> int:
         pass
 
 
-@dataclass
 class Operand(ExprNode):
-    def get_result(self) -> int:
+    def result(self) -> int:
         try:
-            return int(self.value)
+            return int(self._value)
         except ValueError:
             raise InvExprError()
 
     def __str__(self):
-        return self.value
+        return self._value
 
 
 @dataclass
 class Operator(ExprNode):
-    left: 'ExprNode' = None
-    right: 'ExprNode' = None
+    left: ExprNode = None
+    right: ExprNode = None
 
-    def get_result(self) -> int:
-        return OPERATORS[self.value](self.left.get_result(), self.right.get_result())
+    def result(self) -> int:
+        return OPERATORS[self._value](self.left.result(), self.right.result())
 
     def __str__(self):
-        return f'{self.left} {self.value} {self.right}'
+        return f'{self.left} {self._value} {self.right}'
