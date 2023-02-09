@@ -194,7 +194,7 @@ files:
 - name: calculator/operands.py
   visible: true
   learner_created: true
-feedback_link: https://hyperskill.org/projects/74/stages/413/implement#comment
+feedback_link: https://hyperskill.org/learn/step/6594#comment
 status: Solved
 feedback:
   message: Congratulations!

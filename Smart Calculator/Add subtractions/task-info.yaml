@@ -169,7 +169,7 @@ files:
 - name: calculator/exceptions.py
   visible: true
   learner_created: true
-feedback_link: https://hyperskill.org/projects/74/stages/412/implement#comment
+feedback_link: https://hyperskill.org/learn/step/6593#comment
 status: Solved
 feedback:
   message: Congratulations!

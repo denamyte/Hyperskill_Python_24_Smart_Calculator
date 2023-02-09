@@ -367,9 +367,9 @@ files:
         def __str__(self):
             return 'Invalid expression'
   learner_created: true
-feedback_link: https://hyperskill.org/projects/74/stages/414/implement#comment
+feedback_link: https://hyperskill.org/learn/step/6595#comment
 status: Solved
 feedback:
   message: Congratulations!
   time: "Tue, 07 Feb 2023 09:07:18 UTC"
-record: -1
+record: 6

@@ -236,6 +236,37 @@ files:
     if __name__ == '__main__':
         CalcTest("calculator.calculator").run_tests()
   learner_created: false
-feedback_link: https://hyperskill.org/projects/74/stages/415/implement#comment
-status: Unchecked
+- name: calculator/exceptions.py
+  visible: true
+  text: |
+    class UnknownCmdError(BaseException):
+        def __str__(self):
+            return 'Unknown command'
+
+
+    class InvExprError(BaseException):
+        def __str__(self):
+            return 'Invalid expression'
+
+
+    class InvIdentError(BaseException):
+        def __str__(self):
+            return 'Invalid identifier'
+
+
+    class InvAssignmentError(BaseException):
+        def __str__(self):
+            return 'Invalid assignment'
+
+
+    class UnknownVarError(BaseException):
+        def __str__(self):
+            return 'Unknown variable'
+  learner_created: true
+feedback_link: https://hyperskill.org/learn/step/6596#comment
+status: Solved
+feedback:
+  message: Well done! You've finished the project. Select a new project on <a href="https://hyperskill.org/projects">JetBrains
+    Academy</a> to continue learning.
+  time: "Thu, 09 Feb 2023 18:29:55 UTC"
 record: -1

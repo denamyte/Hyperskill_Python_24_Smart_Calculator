@@ -150,7 +150,7 @@ files:
     if __name__ == '__main__':
         CalcTest("calculator.calculator").run_tests()
   learner_created: false
-feedback_link: https://hyperskill.org/projects/74/stages/411/implement#comment
+feedback_link: https://hyperskill.org/learn/step/6592#comment
 status: Solved
 feedback:
   message: Congratulations!
